@@ -1,30 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
-  installEventListeners()
-});
+   addEventListenerToForm()
+})
 
-function installEventListeners() {
+function addEventListenerToForm() {
     let form = document.getElementById("create-task-form")
-    
-    form.addEventListener("submit", addTask)
+    form.addEventListener("submit", handleFormSubmit)
 }
 
-function addTask(e) {
+function handleFormSubmit(e) {
     e.preventDefault()
-    let toDoInput = document.getElementById("new-task-description")
-    let ul = document.getElementById("tasks")
-    let li = document.createElement("li")
-    let deleteBtn = document.createElement("button")
-    deleteBtn.innerHTML = "x"
+    let todo = e.target[0].value
+    postTodo(todo)
+    e.target.reset()
+}
 
-    deleteBtn.addEventListener("click", (e) => {
-        e.target.parentNode.remove()
-    })
-    
+function postTodo(todo) {
+    let p = document.createElement('p')
+    let deleteBtn = document.createElement('button')
+    let list = document.getElementById("list")
 
-    li.innerHTML = `${toDoInput.value}  `
-    li.appendChild(deleteBtn)
-    ul.appendChild(li)
+    deleteBtn.textContent = "x"
+    deleteBtn.addEventListener("click", deleteTask)
 
-    toDoInput.value = ""
-    
+    p.textContent = `${todo} `
+    p.appendChild(deleteBtn)
+
+    list.appendChild(p)
+}
+
+function deleteTask(e) {
+    e.target.parentNode.remove()
 }
