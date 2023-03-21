@@ -17,9 +17,20 @@
                name="new-task-description"
                placeholder="description"
             />
+            <label for="priority">Priority:</label>
+            <select name="priority" id="priority">
+               <option value="1">High</option>
+               <option value="2">Medium</option>
+               <option value="3">Low</option>
+            </select>
             <input type="submit" value="Create New Task" />
          </form>
-
+         <br>
+         <select name="sort" id="sort">
+            <option value="high-low">High -> Low</option>
+            <option value="low-high">Low -> High</option>
+         </select>
+         
          <div id="list">
             <h2>My Todos:</h2>
             <ul id="tasks"></ul>
