@@ -10,16 +10,16 @@ function addingEventListeners() {
       .addEventListener("submit", handleFormSubmit)
    document
       .getElementById("sort")
-      .addEventListener("change", sortAndDisplyTodos)
+      .addEventListener("change", sortAndDisplayTodos)
 }
 
 function handleFormSubmit(e) {
    e.preventDefault()
 
-   let todo = { task: e.target[0].value, priority: e.target[1].value }
+   let todo = { task: e.target[0].value, priority: Number(e.target[1].value) }
 
    addToArray(todo)
-   sortAndDisplyTodos()
+   sortAndDisplayTodos()
 
    e.target.reset()
 }
@@ -43,9 +43,9 @@ function displayTodos() {
 
       p.textContent = `${todo.task} `
 
-      if (Number(todo.priority) === 1) {
+      if (todo.priority === 1) {
          p.style.color = "red"
-      } else if (Number(todo.priority) === 2) {
+      } else if (todo.priority === 2) {
          p.style.color = "green"
       } else {
          p.style.color = "blue"
@@ -62,7 +62,7 @@ function deleteTask(e, todo) {
    e.target.parentNode.remove()
 }
 
-function sortAndDisplyTodos() {
+function sortAndDisplayTodos() {
    let sort = document.getElementById("sort")
 
    if (sort.value === "high-low") {
@@ -70,6 +70,6 @@ function sortAndDisplyTodos() {
    } else {
       todos.sort((a, b) => b.priority - a.priority)
    }
-   
+
    displayTodos()
 }
