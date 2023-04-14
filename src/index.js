@@ -2,45 +2,68 @@ document.addEventListener("DOMContentLoaded", () => {
    addingEventListeners()
 })
 
+let taskArr = []
+
 function addingEventListeners() {
    document
       .getElementById("create-task-form")
       .addEventListener("submit", handleFormSubmit)
+   document.getElementById("sort-tasks").addEventListener("change", sortTasks)
 }
 
 function handleFormSubmit(e) {
    e.preventDefault()
    const task = e.target["new-task-description"].value
    const priorityLevel = parseInt(e.target.priority.value)
-   displayTask(task, priorityLevel)
+
+   const taskObj = { task, priorityLevel }
+   taskArr.push(taskObj)
+   sortTasks()
+   displayTasks()
+
+   e.target.reset()
 }
 
-function displayTask(task, priorityLevel) {
+function displayTasks() {
    const taskUl = document.getElementById("tasks")
-   const taskLi = document.createElement("li")
-   const deleteBtn = document.createElement("button")
+   taskUl.innerHTML = ""
 
-   deleteBtn.textContent = "x"
-   deleteBtn.addEventListener("click", deleteTask)
+   taskArr.forEach((task) => {
+      const taskLi = document.createElement("li")
+      const deleteBtn = document.createElement("button")
 
-   taskLi.textContent = task + " "
-   taskLi.style.color = getPriorityColor(priorityLevel)
-   taskLi.appendChild(deleteBtn)
-   taskUl.appendChild(taskLi)
+      deleteBtn.textContent = "x"
+      deleteBtn.addEventListener("click", (e) => deleteTask(e, task))
+
+      taskLi.textContent = task.task + " "
+      taskLi.style.color = getPriorityColor(task.priorityLevel)
+      taskLi.appendChild(deleteBtn)
+      taskUl.appendChild(taskLi)
+   })
 }
 
-function deleteTask(e) {
-   console.log(e) // what to remove?
+function deleteTask(e, task) {
+   console.log(e) // e.target is deleteBtn
+   taskArr = taskArr.filter((t) => t.task !== task.task)
    e.target.parentNode.remove()
-
 }
 
 function getPriorityColor(priorityLevel) {
    if (priorityLevel === 1) {
       return "red"
-   } else if(priorityLevel ===2){
+   } else if (priorityLevel === 2) {
       return "green"
    } else {
       return "blue"
    }
+}
+
+function sortTasks() {
+   const sortTasksSelect = document.getElementById("sort-tasks")
+   if (sortTasksSelect.value === "h-l") {
+      taskArr.sort((a, b) => a.priorityLevel - b.priorityLevel)
+   } else {
+      taskArr.sort((a, b) => b.priorityLevel - a.priorityLevel)
+   }
+   displayTasks()
 }
