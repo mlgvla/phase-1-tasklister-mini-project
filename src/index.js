@@ -42,9 +42,9 @@ function displayTasks() {
    })
 }
 
-function deleteTask(e, task) {
+function deleteTask(e, currentTask) {
    console.log(e) // e.target is deleteBtn
-   taskArr = taskArr.filter((t) => t.task !== task.task)
+   taskArr = taskArr.filter((arrTask) => arrTask.task !== currentTask.task)
    e.target.parentNode.remove()
 }
 
