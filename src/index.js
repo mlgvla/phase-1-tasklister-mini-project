@@ -1,30 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-  installEventListeners()
-});
+   addingEventListeners()
+})
 
-function installEventListeners() {
-    let form = document.getElementById("create-task-form")
-    
-    form.addEventListener("submit", addTask)
+function addingEventListeners() {
+   document
+      .getElementById("create-task-form")
+      .addEventListener("submit", handleFormSubmit)
 }
 
-function addTask(e) {
-    e.preventDefault()
-    let toDoInput = document.getElementById("new-task-description")
-    let ul = document.getElementById("tasks")
-    let li = document.createElement("li")
-    let deleteBtn = document.createElement("button")
-    deleteBtn.innerHTML = "x"
+function handleFormSubmit(e) {
+   e.preventDefault()
 
-    deleteBtn.addEventListener("click", (e) => {
-        e.target.parentNode.remove()
-    })
-    
+   const task = e.target["new-task-description"].value
+   // console.log(task)
 
-    li.innerHTML = `${toDoInput.value}  `
-    li.appendChild(deleteBtn)
-    ul.appendChild(li)
+   displayTask(task)
+}
 
-    toDoInput.value = ""
-    
+function displayTask(task) {
+   // console.log(task)
+   const taskUl = document.getElementById("tasks")
+   // console.log(taskUl)
+
+   const taskLi = document.createElement("li")
+
+   taskLi.textContent = task
+   // console.log(taskLi)
+   taskUl.appendChild(taskLi)
 }
