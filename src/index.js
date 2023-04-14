@@ -10,21 +10,25 @@ function addingEventListeners() {
 
 function handleFormSubmit(e) {
    e.preventDefault()
-
    const task = e.target["new-task-description"].value
-   // console.log(task)
-
    displayTask(task)
 }
 
 function displayTask(task) {
-   // console.log(task)
    const taskUl = document.getElementById("tasks")
-   // console.log(taskUl)
-
    const taskLi = document.createElement("li")
+   const deleteBtn = document.createElement("button")
 
-   taskLi.textContent = task
-   // console.log(taskLi)
+   deleteBtn.textContent = "x"
+   deleteBtn.addEventListener("click", deleteTask)
+
+   taskLi.textContent = task + " "
+   taskLi.appendChild(deleteBtn)
    taskUl.appendChild(taskLi)
+}
+
+function deleteTask(e) {
+   console.log(e) // what to remove?
+   e.target.parentNode.remove()
+
 }
